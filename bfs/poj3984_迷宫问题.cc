@@ -53,7 +53,7 @@ int main() {
     }
     while(!S.empty()) {
         Node node=S.top();S.pop();
-        printf("(%d,%d)\n",node.r,node.c);
+        printf("(%d, %d)\n",node.r,node.c);
     }
     return 0;
 }
