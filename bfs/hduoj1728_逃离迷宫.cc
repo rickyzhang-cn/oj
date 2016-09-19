@@ -38,12 +38,13 @@ bool bfs() {
         int r=node.r,c=node.c,dir=node.dir,dist=node.dist;
         for(int i=0;i<4;i++) {
             int nr=r+dr[i];
-            int nc=c+dr[i];
+            int nc=c+dc[i];
             int ndist=dist+(dir==i?0:1);
             if(ndist>K) continue;
             if(nr>=0&&nr<m&&nc>=0&&nc<n&&maze[nr][nc]=='.') {
                 if(nr==er&&nc==ec) return true;
-                if(visited[nr][nc]&&ndist>=dists[nr][nc]) continue;
+                //ndist>=dists[nr][nc] is wrong, since dir can differ!
+                if(visited[nr][nc]==1 && ndist>dists[nr][nc]) continue;
                 visited[nr][nc]=1;
                 dists[nr][nc]=ndist;
                 Q.push(Node(nr,nc,i,ndist));
@@ -55,13 +56,17 @@ bool bfs() {
 }
 
 int main() {
+    //freopen("hduoj1728.txt","r",stdin);
     int T;
     scanf("%d",&T);
     while(T--) {
         scanf("%d %d",&m,&n);
-        for(int i=0;i<m;i++)
-            for(int j=0;j<n;j++)
+        for(int i=0;i<m;i++) {
+            getchar();
+            for(int j=0;j<n;j++) {
                 scanf("%c",&maze[i][j]);
+            }
+        }
         scanf("%d %d %d %d %d",&K,&sc,&sr,&ec,&er);
         sc--,sr--,ec--,er--;
         if(bfs()) printf("yes\n");
